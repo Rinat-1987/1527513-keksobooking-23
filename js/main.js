@@ -5,6 +5,8 @@ const getRandomIntegerInRange = function (min, max) {
   throw new Error('Введите второе число больше первого, числа должны быть равны или больше 0');
 };
 
+getRandomIntegerInRange();
+
 const getRandomFloatNumberInRange = function (min, max, decimalPlaces) {
   if (typeof min === 'number' && typeof max === 'number' && min >= 0 && max >= min) {
     const number = Math.random() * (max - min + 1) + min;
@@ -13,66 +15,99 @@ const getRandomFloatNumberInRange = function (min, max, decimalPlaces) {
   throw new Error('Числа должны быть равны или больше 0');
 };
 
-const x = getRandomIntegerInRange (1, 10) {
-  if (getRandomIntegerInRange < 10) {
-    '0' + x;
-  }
-};
+getRandomFloatNumberInRange();
 
-const avatarAuthor = {
-  avatar: 'img/avatars/user{{x}}.png',
-};
+// Объявляю функцию для размещения объявления
+//const createAdvertisement = () => {
+//  return {
 
+    // Создаю объект author
+    const author = {
+      avatar: 'img/avatars/user'
+    };
 
-//Автоматизирую
-/*const getAuthor = function () {
-  const getRandomIntegerInRange = _.random (0, AVATARS.length -1);
+    // Сохраняю в переменную вызов функции с параметрами
+    const userNumber = getRandomIntegerInRange(1, 10);
 
-  return {
-    avatar: AVATAR['img/avatars/user01.png'],
-  };
-};*/
+    // Завожу пустую переменную
+    let stringNumber;
 
+    // Создаю функцию, которая сохранит в себя number 
+    const avatarNumber = function () {
+      if (userNumber < 10) {
+        stringNumber = '0' + userNumber + '.png';
+        return stringNumber;
+      } else {
+        stringNumber = userNumber + '.png';
+        return stringNumber;
+      }
+    };
 
-// 1. Создать массив из 10 объектов, используя мои функции.
-// 2. В объекте должна быть следующая структура:
-// 3. author, объект — описывает автора. Содержит одно поле: avatar, строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 10. Перед однозначными числами ставится 0. Например, 01, 02...10. Адреса изображений не повторяются.
-// 4. номер строки должен случайно генерироваться
-// 5. offer, объект — содержит информацию об объявлении. Состоит из полей:
+    // Обращаемся к свойству объекта и записываем в него результат функции для изменения свойства avatar
+    author.avatar = author.avatar + avatarNumber;
 
-/*title, строка — заголовок предложения. Придумайте самостоятельно.
+    //Создаю массив для поля type
+    const apartments = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+    const randomIndexApartments = getRandomIntegerInRange(0, apartments.length -1);
+    const typeApartments = apartments[randomIndexApartments];
 
-address, строка — адрес предложения. Для простоты пусть пока составляется из географических координат по маске {{location.lat}}, {{location.lng}}.
+    //Создаю массив для поля checkin
+    const entry = ['12:00', '13:00', '14:00'];
+    const randomIndexEntry = getRandomIntegerInRange(0, entry.length -1);
+    const checkinEntry = entry[randomIndexEntry];
 
-price, число — стоимость. Случайное целое положительное число.
+    //Создаю массив для поля checkout
+    const exit = ['12:00', '13:00', '14:00'];
+    const randomIndexExit = getRandomIntegerInRange(0, exit.length -1);
+    const checkoutExit = exit[randomIndexExit];
 
-type, строка — одно из пяти фиксированных значений: palace, flat, house, bungalow или hotel.
+    //Создаю массив для поля features
+    const services = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+    const randomQuantityFeatures = getRandomIntegerInRange(0, services.length -1);
+    //C помощью метода slice копирую часть массива
+    const featuresServices = services.slice(randomQuantityFeatures);
 
-rooms, число — количество комнат. Случайное целое положительное число.
+    //Создаю массив для поля photos
+    const photosApartments = [
+      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
+      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 
+      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+    ];
+    const randomQuantityPhotos = getRandomIntegerInRange(0, photosApartments.length -1);
+    const photosRandom = photosApartments.slice(randomQuantityPhotos);
 
-guests, число — количество гостей, которое можно разместить. Случайное целое положительное число.
+    // Создаю объект offer
+    const offer = {
+      title: 'Аренда жилья',
+      address: '{{location.lat}}, {{location.lng}}',
+      price: function (max) {
+        return Math.floor(Math.random() * max);
+      },
+      type: typeApartments,
+      rooms: function (max) {
+        return Math.floor(Math.random() * max);
+      },
+      guests: function (max) {
+        return Math.floor(Math.random() * max);
+      },
+      checkin: checkinEntry,
+      checkout: checkoutExit,
+      features: featuresServices,
+      description: 'У нас самые комфортные условия проживания!',
+      photos: photosRandom
+    };
 
-checkin, строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
+    // Обявляю переменные равные результату выполнения функций с параметрами
+    const width = getRandomFloatNumberInRange(35.65000, 35.70000, 5);
+    const length = getRandomFloatNumberInRange(139.70000, 139.80000, 5);
 
-checkout, строка — одно из трёх фиксированных значений: 12:00, 13:00 или 14:00.
-
-features, массив строк — массив случайной длины из значений: wifi, dishwasher, parking, washer, elevator, conditioner. Значения не должны повторяться.
-
-description, строка — описание помещения. Придумайте самостоятельно.
-
-photos, массив строк — массив случайной длины из значений: https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg, https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg, https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg.
-
-// 6. location, объект — местоположение в виде географических координат. Состоит из двух полей:
-
-lat, число с плавающей точкой — широта, случайное значение от 35.65000 до 35.70000.
-
-lng, число с плавающей точкой — долгота, случайное значение от 139.70000 до 139.80000.*/
-
-
-
-
-
-/* 1. Создать объект author, он описывает автора.
-   2. Содержит одно поле: avatar, строка — адрес изображения вида img/avatars/user{{xx}}.png, где {{xx}} — это число от 1 до 10.
-   3. Перед однозначными числами ставится 0. Например, 01, 02...10.
-   4. Адреса изображений не повторяются */
+    // Создаю объект и сохраняю в него переменные
+    const location = {
+      lat: function () {
+        return width;
+      },
+      lng: function () {
+        return length;
+      }
+    };
+//};
