@@ -23,7 +23,7 @@ getRandomFloatNumberInRange();
 
     // Создаю объект author
     const author = {
-      avatar: 'img/avatars/user'
+      avatar: 'img/avatars/user',
     };
 
     // Сохраняю в переменную вызов функции с параметрами
@@ -32,7 +32,7 @@ getRandomFloatNumberInRange();
     // Завожу пустую переменную
     let stringNumber;
 
-    // Создаю функцию, которая сохранит в себя number 
+    // Создаю функцию, которая сохранит в себя number
     const avatarNumber = function () {
       if (userNumber < 10) {
         stringNumber = '0' + userNumber + '.png';
@@ -70,8 +70,8 @@ getRandomFloatNumberInRange();
     //Создаю массив для поля photos
     const photosApartments = [
       'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
-      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 
-      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
+      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
+      'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
     ];
     const randomQuantityPhotos = getRandomIntegerInRange(0, photosApartments.length -1);
     const photosRandom = photosApartments.slice(randomQuantityPhotos);
@@ -94,7 +94,7 @@ getRandomFloatNumberInRange();
       checkout: checkoutExit,
       features: featuresServices,
       description: 'У нас самые комфортные условия проживания!',
-      photos: photosRandom
+      photos: photosRandom,
     };
 
     // Обявляю переменные равные результату выполнения функций с параметрами
@@ -108,6 +108,6 @@ getRandomFloatNumberInRange();
       },
       lng: function () {
         return length;
-      }
+      },
     };
 //};
