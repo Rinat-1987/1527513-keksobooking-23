@@ -81,5 +81,4 @@ const createAdvertisement = function () {
 };
 
 const similarAdvertisement = new Array(SIMILAR_ADVERTISEMENT_CONST).fill(null).map(() => createAdvertisement());
-
-similarAdvertisement();
+similarAdvertisement;
