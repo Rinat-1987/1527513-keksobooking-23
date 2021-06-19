@@ -13,14 +13,14 @@ const LNG_MIN = 139.70000;
 const LNG_MAX = 139.80000;
 const SIMILAR_ADVERTISEMENT_CONST = 10;
 
-const getRandomIntegerInRange = function (min, max) {
+const getRandomIntegerInRange = (min, max) => {
   if (typeof min === 'number' && typeof max === 'number' && min >= 0 && max >= min) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
   throw new Error('Введите второе число больше первого, числа должны быть равны или больше 0');
 };
 
-const getRandomFloatNumberInRange = function (min, max, decimalPlaces) {
+const getRandomFloatNumberInRange = (min, max, decimalPlaces) => {
   if (typeof min === 'number' && typeof max === 'number' && min >= 0 && max >= min) {
     const number = Math.random() * (max - min + 1) + min;
     return Number(number.toFixed(decimalPlaces));
@@ -28,57 +28,40 @@ const getRandomFloatNumberInRange = function (min, max, decimalPlaces) {
   throw new Error('Числа должны быть равны или больше 0');
 };
 
-const createAdvertisement = function () {
-  let author = {
-    avatar: 'img/avatars/user',
-  };
-  const userNumber = getRandomIntegerInRange(1, 10);
-  const avatarNumber = function () {
-    let stringNumber;
-    if (userNumber < 10) {
-      stringNumber = `0${userNumber}.png`;
-      return stringNumber;
-    } else {
-      stringNumber = `${userNumber}.png`;
-      return stringNumber;
-    }
-  };
-  author.avatar += avatarNumber();
-  author = author.avatar;
-  const randomIndexApartments = getRandomIntegerInRange(0, APARTAMENTS.length -1);
-  const typeApartments = APARTAMENTS[randomIndexApartments];
-  const randomIndexEntry = getRandomIntegerInRange(0, ENTRIES.length -1);
-  const checkinEntry = ENTRIES[randomIndexEntry];
-  const randomIndexExit = getRandomIntegerInRange(0, ENTRIES.length -1);
-  const checkoutExit = ENTRIES[randomIndexExit];
-  const randomQuantityFeatures = getRandomIntegerInRange(0, SERVICES.length -1);
-  const featuresServices = SERVICES.slice(randomQuantityFeatures);
-  const randomQuantityPhotos = getRandomIntegerInRange(0, PHOTOS_APARTMENTS.length -1);
-  const photosRandom = PHOTOS_APARTMENTS.slice(randomQuantityPhotos);
-  const lat = getRandomFloatNumberInRange(LAT_MIN, LAT_MAX, COORDINATES_DECIMAL_PLACES);
-  const lng = getRandomFloatNumberInRange(LNG_MIN, LNG_MAX, COORDINATES_DECIMAL_PLACES);
+const getRandomArrayElement = (array) => {
+  return array[getRandomIntegerInRange(0, array.length - 1)];
+};
+
+//Функция, которая возвращает случайный массив на основе другого массива
+const getRandomArray = (array) => {
+  return array.slice(getRandomIntegerInRange(0, array.length -1));
+};
+
+const createAdvertisement = (userNumber) => {
   const location = {
-    lat,
-    lng,
-  };
-  const offer = {
-    title: 'Аренда жилья',
-    address: `${location.lat}, ${location.lng}`,
-    price: getRandomIntegerInRange(500, 10000),
-    type: typeApartments,
-    rooms: getRandomIntegerInRange(1, 5),
-    guests: getRandomIntegerInRange(1, 5),
-    checkin: checkinEntry,
-    checkout: checkoutExit,
-    features: featuresServices,
-    description: 'У нас самые комфортные условия проживания!',
-    photos: photosRandom,
+    lat: getRandomFloatNumberInRange(LAT_MIN, LAT_MAX, COORDINATES_DECIMAL_PLACES),
+    lng: getRandomFloatNumberInRange(LNG_MIN, LNG_MAX, COORDINATES_DECIMAL_PLACES),
   };
   return {
-    author,
-    offer,
+    author: {
+      avatar: `img/avatars/user${userNumber < 10 ? `0${userNumber}.png` : `${userNumber}.png`}`,
+    },
+    offer: {
+      title: 'Аренда жилья',
+      address: `${location.lat}, ${location.lng}`,
+      price: getRandomIntegerInRange(500, 10000),
+      type: getRandomArrayElement(APARTAMENTS),
+      rooms: getRandomIntegerInRange(1, 5),
+      guests: getRandomIntegerInRange(1, 5),
+      checkin: getRandomArrayElement(ENTRIES),
+      checkout: getRandomArrayElement(ENTRIES),
+      features: getRandomArray(SERVICES),
+      description: 'У нас самые комфортные условия проживания!',
+      photos: getRandomArray(PHOTOS_APARTMENTS),
+    },
+    location,
   };
 };
 
-const similarAdvertisement = new Array(SIMILAR_ADVERTISEMENT_CONST).fill(null).map(() => createAdvertisement());
+const similarAdvertisement = new Array(SIMILAR_ADVERTISEMENT_CONST).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
 similarAdvertisement;
