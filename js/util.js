@@ -13,13 +13,9 @@ const getRandomFloatNumberInRange = (min, max, decimalPlaces) => {
   throw new Error('Числа должны быть равны или больше 0');
 };
 
-const getRandomArrayElement = (array) => {
-  return array[getRandomIntegerInRange(0, array.length - 1)];
-};
+const getRandomArrayElement = (array) => array[getRandomIntegerInRange(0, array.length - 1)];
 
 //Функция, которая возвращает случайный массив на основе другого массива
-const getRandomArray = (array) => {
-  return array.slice(getRandomIntegerInRange(0, array.length -1));
-};
+const getRandomArray = (array) => array.slice(getRandomIntegerInRange(0, array.length -1));
 
 export {getRandomIntegerInRange, getRandomFloatNumberInRange, getRandomArrayElement, getRandomArray};
