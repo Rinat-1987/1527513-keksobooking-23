@@ -1,6 +1,7 @@
 import {getRandomIntegerInRange, getRandomFloatNumberInRange, getRandomArrayElement, getRandomArray} from './util.js';
 
 const APARTAMENTS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TYPES = ['Дворец', 'Квартира', 'Дом', 'Бунгало', 'Отель'];
 const ENTRIES = ['12:00', '13:00', '14:00'];
 const SERVICES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const PHOTOS_APARTMENTS = [
@@ -13,6 +14,7 @@ const LAT_MAX = 35.70000;
 const COORDINATES_DECIMAL_PLACES = 5;
 const LNG_MIN = 139.70000;
 const LNG_MAX = 139.80000;
+const SIMILAR_ADVERTISEMENT_CONST = 10;
 
 const createAdvertisement = (userNumber) => {
   const location = {
@@ -40,4 +42,4 @@ const createAdvertisement = (userNumber) => {
   };
 };
 
-export {createAdvertisement};
+export {createAdvertisement, APARTAMENTS, TYPES, SIMILAR_ADVERTISEMENT_CONST};
