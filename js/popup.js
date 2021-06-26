@@ -37,7 +37,7 @@ featureListElement.querySelectorAll('.popup__feature').forEach((item) => {
 const description = templateFragment.querySelector('.popup__description');
 const descriptionRendering = () => {
 //Если строка пустая, то удали поле description
-  if (!obj.offer.description === '') {
+  if (! obj.offer.description === '') {
     description.textContent = obj.offer.description;
     return description.textContent;
   } else {description.remove;}
@@ -64,4 +64,4 @@ avatar.src = obj.author.avatar;
 const mapRendering = document.querySelector('.map__canvas');
 mapRendering.appendChild(title);
 
-export {mapRendering};
+export {title, address, price, type, quantityRoomsQuests, check, featureListElement, description, descriptionRendering, photos, avatar, mapRendering};
