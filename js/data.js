@@ -43,4 +43,4 @@ const createAdvertisement = (userNumber) => {
 
 const createAdvertisements = (count) => new Array(count).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
 
-export {createAdvertisements, APARTAMENTS, TYPES, author, avatar};
+export {createAdvertisement,createAdvertisements, APARTAMENTS, TYPES};

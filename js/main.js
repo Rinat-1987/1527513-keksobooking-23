@@ -1,5 +1,12 @@
-//import {createAdvertisements} from './data.js';
-import {renderingAdvertisements} from './popup.js';
+import {
+  createAdvertisements
+} from './data.js';
 
+import {
+  renderPopup
+} from './popup.js';
 
-console.log(renderingAdvertisements(1));
+const advertisement = createAdvertisements(10);
+const firstAdvertisement = advertisement[0];
+renderPopup(firstAdvertisement);
+
