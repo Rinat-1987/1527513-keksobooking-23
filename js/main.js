@@ -1,6 +1,5 @@
-import {createAdvertisement} from './data.js';
-import {createAdvertisements} from './popup.js';
+//import {createAdvertisements} from './data.js';
+import {renderingAdvertisements} from './popup.js';
 
 
-//const createAdvertisements = (count) => new Array(count).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
-console.log(createAdvertisements(1));
+console.log(renderingAdvertisements(1));

@@ -1,8 +1,8 @@
 // Здесь будет генерация объявлений
-import {createAdvertisement, APARTAMENTS, TYPES} from './data.js';
+import {createAdvertisements, APARTAMENTS, TYPES, author, avatar} from './data.js';
 
-const createAdvertisements = () => {
-  const obj = createAdvertisement(5);
+const renderingAdvertisements = () => {
+  const obj = createAdvertisements(5);
   const templateFragment = document.querySelector('#card').content;
   const mapRendering = document.querySelector('.map__canvas');
 
@@ -74,4 +74,4 @@ const createAdvertisements = () => {
   return mapRendering;
 };
 
-export {createAdvertisements};
+export {renderingAdvertisements};

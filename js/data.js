@@ -14,7 +14,6 @@ const LAT_MAX = 35.70000;
 const COORDINATES_DECIMAL_PLACES = 5;
 const LNG_MIN = 139.70000;
 const LNG_MAX = 139.80000;
-const SIMILAR_ADVERTISEMENT_CONST = 10;
 
 const createAdvertisement = (userNumber) => {
   const location = {
@@ -42,4 +41,6 @@ const createAdvertisement = (userNumber) => {
   };
 };
 
-export {createAdvertisement, APARTAMENTS, TYPES, SIMILAR_ADVERTISEMENT_CONST};
+const createAdvertisements = (count) => new Array(count).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
+
+export {createAdvertisements, APARTAMENTS, TYPES, author, avatar};
