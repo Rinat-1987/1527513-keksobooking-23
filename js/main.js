@@ -1,6 +1,12 @@
-import {createAdvertisement} from './data.js';
+import {
+  createAdvertisements
+} from './data.js';
 
-const SIMILAR_ADVERTISEMENT_CONST = 10;
+import {
+  renderPopup
+} from './popup.js';
 
-const similarAdvertisement = new Array(SIMILAR_ADVERTISEMENT_CONST).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
-similarAdvertisement;
+const advertisement = createAdvertisements(10);
+const firstAdvertisement = advertisement[0];
+renderPopup(firstAdvertisement);
+

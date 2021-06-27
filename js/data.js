@@ -1,6 +1,7 @@
 import {getRandomIntegerInRange, getRandomFloatNumberInRange, getRandomArrayElement, getRandomArray} from './util.js';
 
 const APARTAMENTS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
+const TYPES = ['Дворец', 'Квартира', 'Дом', 'Бунгало', 'Отель'];
 const ENTRIES = ['12:00', '13:00', '14:00'];
 const SERVICES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 const PHOTOS_APARTMENTS = [
@@ -40,4 +41,6 @@ const createAdvertisement = (userNumber) => {
   };
 };
 
-export {createAdvertisement};
+const createAdvertisements = (count) => new Array(count).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
+
+export {createAdvertisement,createAdvertisements, APARTAMENTS, TYPES};
