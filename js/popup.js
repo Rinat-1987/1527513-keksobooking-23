@@ -55,7 +55,7 @@ const renderPopup = (advert) => {
   photos.innerHTML = '';
   const outputPhotos = advert.offer.photos.length;
 
-  for (let index = 0; index <= outputPhotos; index++) {
+  for (let index = 0; index < outputPhotos; index++) {
     const image = photo.cloneNode(true);
     image.src = advert.offer.photos[index];
     photos.appendChild(image);
