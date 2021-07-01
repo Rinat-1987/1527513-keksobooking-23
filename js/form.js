@@ -1,4 +1,3 @@
-//Здесь будет форма
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -62,23 +61,30 @@ priceInput.addEventListener('input', () => {
 });
 
 const quantityRoom = adForm.querySelector('#room_number');
-const optionRooms = quantityRoom.children;
 const capacity = adForm.querySelector('#capacity');
-const optionCapacities = capacity.children;
+const optionsRoom = quantityRoom.querySelectorAll('option');
+const optionsCapacity = capacity.querySelectorAll('option');
 
-if (optionRooms[0].hasAttribute('selected')) {
-  optionCapacities[0].setAttribute('disabled', 'disabled');
-  optionCapacities[1].setAttribute('disabled', 'disabled');
-  optionCapacities[3].setAttribute('disabled', 'disabled');
-}
-
-/*optionCapacities.forEach((index) => {
-  if (quantityRoom.value = 1) {
-    const valOne = optionCapacities[index];
-     if (valOne.innerHTML = '1 комната') {
-      valOne.setAttribute('selected', 'selected');
-     }
+quantityRoom.addEventListener('change', () => {
+  if (quantityRoom.value >= capacity.value) {
+    quantityRoom.setCustomValidity('');
+  } else {
+    quantityRoom.setCustomValidity('Укажите большее число комнат');
   }
-});*/
+  /*if (quantityRoom.value === 100) {
+    optionsCapacity.forEach((index) => {
+      index.setAttribute('disabled', 'disabled');
+    });*/
+  quantityRoom.reportValidity();
+});
+
+capacity.addEventListener('change', () => {
+  if (quantityRoom.value >= capacity.value) {
+    capacity.setCustomValidity('');
+  } else {
+    capacity.setCustomValidity('Укажите меньшее число гостей');
+  }
+  capacity.reportValidity();
+});
 
 export {activateForm};
