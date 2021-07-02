@@ -7,11 +7,13 @@ import {
 } from './popup.js';
 
 import {
-  activeForm
+  activateForm
 } from './form.js';
+
 
 const advertisements = createAdvertisements(10);
 const firstAdvertisement = advertisements[0];
 renderPopup(firstAdvertisement);
 
-activeForm();
+activateForm();
+
