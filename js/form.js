@@ -62,24 +62,24 @@ priceInput.addEventListener('input', () => {
 
 const quantityRoom = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
-const optionsRoom = quantityRoom.querySelectorAll('option');
-const optionsCapacity = capacity.querySelectorAll('option');
 
 quantityRoom.addEventListener('change', () => {
-  if (quantityRoom.value >= capacity.value) {
+  if (quantityRoom.value === 100) {
+    quantityRoom.setCustomValidity('Укажите меньшее число комнат');
+    capacity.value = 0;
+  } else if (quantityRoom.value >= capacity.value) {
     quantityRoom.setCustomValidity('');
   } else {
     quantityRoom.setCustomValidity('Укажите большее число комнат');
   }
-  /*if (quantityRoom.value === 100) {
-    optionsCapacity.forEach((index) => {
-      index.setAttribute('disabled', 'disabled');
-    });*/
   quantityRoom.reportValidity();
 });
 
 capacity.addEventListener('change', () => {
-  if (quantityRoom.value >= capacity.value) {
+  if (capacity.value === 0) {
+    capacity.setCustomValidity('Укажите другое число гостей');
+    quantityRoom.value = 100;
+  } else if (capacity.value <= quantityRoom.value) {
     capacity.setCustomValidity('');
   } else {
     capacity.setCustomValidity('Укажите меньшее число гостей');
