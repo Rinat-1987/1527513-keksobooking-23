@@ -64,27 +64,34 @@ const quantityRoom = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 
 quantityRoom.addEventListener('change', () => {
-  if (quantityRoom.value === 100) {
-    quantityRoom.setCustomValidity('Укажите меньшее число комнат');
-    capacity.value = 0;
-  } else if (quantityRoom.value >= capacity.value) {
+  if (quantityRoom.value === '100') {
+    if (capacity.value === '0') {
+      quantityRoom.setCustomValidity('');
+    } else {
+      quantityRoom.setCustomValidity('Укажите "Не для гостей"');
+    }
+  } else if (quantityRoom.value >= capacity.value && capacity.value !== '0') {
     quantityRoom.setCustomValidity('');
   } else {
-    quantityRoom.setCustomValidity('Укажите большее число комнат');
+    quantityRoom.setCustomValidity('Укажите меньшее число гостей');
   }
   quantityRoom.reportValidity();
 });
 
 capacity.addEventListener('change', () => {
-  if (capacity.value === 0) {
-    capacity.setCustomValidity('Укажите другое число гостей');
-    quantityRoom.value = 100;
-  } else if (capacity.value <= quantityRoom.value) {
+  if (capacity.value === '0') {
+    if (quantityRoom.value === '100') {
+      capacity.setCustomValidity('');
+    } else {
+      capacity.setCustomValidity('Укажите большее число комнат');
+    }
+  } else if (capacity.value <= quantityRoom.value && quantityRoom.value !== '100') {
     capacity.setCustomValidity('');
   } else {
-    capacity.setCustomValidity('Укажите меньшее число гостей');
+    capacity .setCustomValidity('Укажите большее число комнат');
   }
   capacity.reportValidity();
 });
 
 export {activateForm};
+
