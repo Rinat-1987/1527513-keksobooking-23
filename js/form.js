@@ -1,6 +1,11 @@
+import {APARTAMENTS} from './data.js';
+
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE = 1000000;
+const QUANTITY_ROOM_MAX = '100';
+const CAPACITY_MIN = '0';
+const MIN_PRICE = [10000, 1000, 5000, 0, 3000];
 
 const adForm = document.querySelector('.ad-form');
 const adFormFieldsets = adForm.querySelectorAll('fieldset');
@@ -64,13 +69,13 @@ const quantityRoom = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 
 quantityRoom.addEventListener('change', () => {
-  if (quantityRoom.value === '100') {
-    if (capacity.value === '0') {
+  if (quantityRoom.value === QUANTITY_ROOM_MAX) {
+    if (capacity.value === CAPACITY_MIN) {
       quantityRoom.setCustomValidity('');
     } else {
       quantityRoom.setCustomValidity('Укажите "Не для гостей"');
     }
-  } else if (quantityRoom.value >= capacity.value && capacity.value !== '0') {
+  } else if (quantityRoom.value >= capacity.value && capacity.value !== CAPACITY_MIN) {
     quantityRoom.setCustomValidity('');
   } else {
     quantityRoom.setCustomValidity('Укажите меньшее число гостей');
@@ -79,13 +84,13 @@ quantityRoom.addEventListener('change', () => {
 });
 
 capacity.addEventListener('change', () => {
-  if (capacity.value === '0') {
-    if (quantityRoom.value === '100') {
+  if (capacity.value === CAPACITY_MIN) {
+    if (quantityRoom.value === QUANTITY_ROOM_MAX) {
       capacity.setCustomValidity('');
     } else {
       capacity.setCustomValidity('Укажите большее число комнат');
     }
-  } else if (capacity.value <= quantityRoom.value && quantityRoom.value !== '100') {
+  } else if (capacity.value <= quantityRoom.value && quantityRoom.value !== QUANTITY_ROOM_MAX) {
     capacity.setCustomValidity('');
   } else {
     capacity .setCustomValidity('Укажите большее число комнат');
@@ -93,5 +98,52 @@ capacity.addEventListener('change', () => {
   capacity.reportValidity();
 });
 
-export {activateForm};
+const typeHousing = adForm.querySelector('#type');
 
+/*typeHousing.addEventListener('change', () => {
+  APARTAMENTS.forEach((index) => {
+    if (APARTAMENTS[index] === typeHousing.value) {
+      APARTAMENTS[index] = MIN_PRICE[index];
+      priceInput.setAttribute('min', 'MIN_PRICE[index]');
+      priceInput.setAttribute('placeholder', 'MIN_PRICE[index]');
+    }
+  });
+});*/
+
+typeHousing.addEventListener('change', () => {
+  if (typeHousing.value === 'bungalow') {
+    priceInput.setAttribute('min', '0');
+    priceInput.setAttribute('placeholder', '0');
+  }
+  if (typeHousing.value === 'flat') {
+    priceInput.setAttribute('min', '1000');
+    priceInput.setAttribute('placeholder', '1000');
+  }
+  if (typeHousing.value === 'hotel') {
+    priceInput.setAttribute('min', '3000');
+    priceInput.setAttribute('placeholder', '3000');
+  }
+  if (typeHousing.value === 'house') {
+    priceInput.setAttribute('min', '5000');
+    priceInput.setAttribute('placeholder', '5000');
+  }
+  if (typeHousing.value === 'palace') {
+    priceInput.setAttribute('min', '10000');
+    priceInput.setAttribute('placeholder', '10000');
+  }
+});
+
+const timeIn = adForm.querySelector('#timein');
+const timeOut = adForm.querySelector('#timeout');
+
+timeIn.addEventListener('change', () => {
+  timeOut.value = timeIn.value;
+});
+
+timeOut.addEventListener('change', () => {
+  timeIn.value = timeOut.value;
+});
+
+export {
+  activateForm
+};
