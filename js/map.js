@@ -3,8 +3,8 @@ const map = L.map('map-canvas')
   .on('load', () => {
   })
   .setView({
-    lat: 35.6895,
-    lng: 139.692,
+    lat: 35.68950,
+    lng: 139.69200,
   }, 10);
 
 L.tileLayer(
@@ -31,5 +31,14 @@ const marker = L.marker(
   },
 );
 marker.addTo(map);
+
+const address = document.querySelector('#address');
+
+marker.on('moveend', (evt) => {
+  const newMarker = evt.target.getLatLng();
+  const newMarkerLat = newMarker.lat;
+  const newMarkerLng = newMarker.lng;
+  address.value = `${newMarkerLat.toFixed(5)}, ${newMarkerLng.toFixed(5)}`;
+});
 
 export {map};

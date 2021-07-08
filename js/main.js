@@ -6,10 +6,21 @@ import {
   map
 } from './map.js';
 
-/*const advertisements = createAdvertisements(10);
-const firstAdvertisement = advertisements[0];
-renderPopup(firstAdvertisement);*/
+import {
+  createAdvertisements
+} from './data.js';
+
+const newAdvertisement = createAdvertisements(10);
+
+/*const newObject = newAdvertisement.map((obj) => {
+  obj.location;
+});*/
+
+
+newAdvertisement.forEach((obj) => {
+  const newObject = obj.location;
+  console.log(newObject);
+});
 
 activateForm();
 map;
-
