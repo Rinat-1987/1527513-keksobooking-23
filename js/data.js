@@ -35,7 +35,7 @@ const createAdvertisement = (userNumber) => {
       checkout: getRandomArrayElement(ENTRIES),
       features: getRandomArray(SERVICES),
       description: 'У нас самые комфортные условия проживания!',
-      photos: getRandomArrayElement(PHOTOS_APARTMENTS),
+      photos: getRandomArray(PHOTOS_APARTMENTS),
     },
     location,
   };
