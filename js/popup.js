@@ -64,5 +64,5 @@ const renderPopup = (advert) => {
 };
 
 export {
-  template, renderPopup
+  renderPopup
 };

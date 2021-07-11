@@ -1,9 +1,4 @@
-import {
-  template
-} from './popup.js';
-
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-const photoContainer = template.querySelector('.popup__photos');
 
 const createCustomPopup = (point) => {
   const popupElement = cardTemplate.cloneNode(true);
@@ -17,6 +12,7 @@ const createCustomPopup = (point) => {
   const popupTime = popupElement.querySelector('.popup__text--time');
   const popupFeatureList = popupElement.querySelector('.popup__features');
   const popupDescription = popupElement.querySelector('.popup__description');
+  const photoContainer = popupElement.querySelector('.popup__photos');
   const popupPhoto = popupElement.querySelector('.popup__photo');
 
   if (point.author.avatar) {
@@ -61,7 +57,9 @@ const createCustomPopup = (point) => {
     popupTime.remove();
   }
 
-  if (point.offer.features) {
+  if (point.offer.features.length === 0) {
+    popupFeatureList.remove();
+  } else {
     popupFeatureList.innerHTML = '';
     const features = point.offer.features;
     features.forEach((feature) => {
@@ -70,15 +68,15 @@ const createCustomPopup = (point) => {
       createElementItem.classList.add(`popup__feature--${feature}`);
       popupFeatureList.appendChild(createElementItem);
     });
-  } else {
-    popupFeatureList.remove();
   }
 
   if (point.offer.description) {
     popupDescription.textContent = point.offer.description;
   }
 
-  if (point.offer.photos) {
+  if (point.offer.photos.length === 0) {
+    photoContainer.remove();
+  } else {
     photoContainer.innerHTML = '';
     const photosLinks = point.offer.photos;
     photosLinks.forEach((photoLink) => {
@@ -86,8 +84,6 @@ const createCustomPopup = (point) => {
       photoContainer.appendChild(clonePhoto);
       clonePhoto.src = photoLink;
     });
-  } else {
-    popupPhoto.remove();
   }
 
   return popupElement;
