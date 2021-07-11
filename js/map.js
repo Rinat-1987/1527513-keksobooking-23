@@ -1,11 +1,14 @@
 //Здесь будет карта
 import {
-  createAdvertisements
+  createAdvertisements,
+  COORDINATES_DECIMAL_PLACES
 } from './data.js';
 
 import {
   createCustomPopup
 } from './card.js';
+
+const QUANTITY_CARDS = 10;
 
 const map = L.map('map-canvas')
   .on('load', () => {})
@@ -41,10 +44,10 @@ marker.on('moveend', (evt) => {
   const newMarker = evt.target.getLatLng();
   const newMarkerLat = newMarker.lat;
   const newMarkerLng = newMarker.lng;
-  address.value = `${newMarkerLat.toFixed(5)}, ${newMarkerLng.toFixed(5)}`;
+  address.value = `${newMarkerLat.toFixed(COORDINATES_DECIMAL_PLACES)}, ${newMarkerLng.toFixed(COORDINATES_DECIMAL_PLACES)}`;
 });
 
-const newAdvertisement = createAdvertisements(10);
+const newAdvertisement = createAdvertisements(QUANTITY_CARDS);
 
 newAdvertisement.forEach((point) => {
   const lat = point.location.lat;
