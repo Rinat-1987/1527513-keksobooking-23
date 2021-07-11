@@ -28,7 +28,7 @@ const createAdvertisement = (userNumber) => {
       title: 'Аренда жилья',
       address: `${location.lat}, ${location.lng}`,
       price: getRandomIntegerInRange(500, 10000),
-      type: getRandomArrayElement(APARTAMENTS),
+      type: getRandomArrayElement(TYPES),
       rooms: getRandomIntegerInRange(1, 5),
       guests: getRandomIntegerInRange(1, 5),
       checkin: getRandomArrayElement(ENTRIES),
@@ -43,4 +43,4 @@ const createAdvertisement = (userNumber) => {
 
 const createAdvertisements = (count) => new Array(count).fill(null).map((currentValue, index) => createAdvertisement(index + 1));
 
-export {createAdvertisement,createAdvertisements, APARTAMENTS, TYPES};
+export {APARTAMENTS, TYPES, COORDINATES_DECIMAL_PLACES, createAdvertisements};
