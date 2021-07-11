@@ -1,3 +1,5 @@
+import {APARTAMENTS} from './data.js';
+
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -64,6 +66,7 @@ priceInput.setAttribute('max', MAX_PRICE);
 
 const quantityRoom = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
+
 
 const validateGuestsAndRooms = () => {
   if (quantityRoom.value === QUANTITY_ROOM_MAX) {
