@@ -1,35 +1,76 @@
 //Здесь будет карта
+import {
+  createAdvertisements,
+  COORDINATES_DECIMAL_PLACES
+} from './data.js';
+
+import {
+  createCustomPopup
+} from './card.js';
+
+const QUANTITY_CARDS = 10;
+
 const map = L.map('map-canvas')
-  .on('load', () => {
-  })
+  .on('load', () => {})
   .setView({
-    lat: 35.6895,
-    lng: 139.692,
+    lat: 35.68950,
+    lng: 139.69200,
   }, 10);
 
 L.tileLayer(
-  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  {
+  'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
   },
 ).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: 'img/images leaflet/marker-icon.png',
+  iconUrl: 'img/main-pin.svg',
   iconSize: [52, 52],
   iconAnchor: [26, 52],
 });
 
-const marker = L.marker(
-  {
-    lat: 35.6895,
-    lng: 139.692,
-  },
-  {
-    draggable: true,
-    icon: mainPinIcon,
-  },
-);
+const marker = L.marker({
+  lat: 35.6895,
+  lng: 139.692,
+}, {
+  draggable: true,
+  icon: mainPinIcon,
+});
 marker.addTo(map);
 
-export {map};
+const address = document.querySelector('#address');
+
+marker.on('moveend', (evt) => {
+  const newMarker = evt.target.getLatLng();
+  const newMarkerLat = newMarker.lat;
+  const newMarkerLng = newMarker.lng;
+  address.value = `${newMarkerLat.toFixed(COORDINATES_DECIMAL_PLACES)}, ${newMarkerLng.toFixed(COORDINATES_DECIMAL_PLACES)}`;
+});
+
+const newAdvertisement = createAdvertisements(QUANTITY_CARDS);
+
+newAdvertisement.forEach((point) => {
+  const lat = point.location.lat;
+  const lng = point.location.lng;
+  const icon = L.icon({
+    iconUrl: 'img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
+  });
+  const newMarker = L.marker({
+    lat,
+    lng,
+  }, {
+    icon,
+  });
+
+  newMarker
+    .addTo(map)
+    .bindPopup(
+      createCustomPopup(point),
+    );
+});
+
+export {
+  map
+};
