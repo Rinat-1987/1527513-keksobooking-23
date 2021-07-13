@@ -1,5 +1,3 @@
-import {APARTAMENTS} from './data.js';
-
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE = 1000000;
