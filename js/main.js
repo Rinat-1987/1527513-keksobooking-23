@@ -1,21 +1,20 @@
 import {
-  activateForm
+  activateForm,
+  setUserFormSubmit
 } from './form.js';
 
 import {
-  map
-} from './map.js';
-
-import './create-fetch.js';
-
-/*import {
-  renderPopup
-} from './popup.js';
+  createFetch
+} from './create-fetch.js';
 
 import {
-  createAdvertisement
-} from './data.js';
+  renderData
+} from './map.js';
 
-console.log(renderPopup(createAdvertisement(1)));*/
+import {
+  showAlert
+} from './util.js';
+
 activateForm();
-map;
+createFetch(renderData, showAlert);
+setUserFormSubmit();

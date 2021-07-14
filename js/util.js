@@ -1,21 +1,107 @@
-const getRandomIntegerInRange = (min, max) => {
-  if (typeof min === 'number' && typeof max === 'number' && min >= 0 && max >= min) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-  throw new Error('Введите второе число больше первого, числа должны быть равны или больше 0');
+import {
+  ALERT_SHOW_TIME
+} from './data.js';
+
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = 100;
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = 0;
+  alertContainer.style.top = 0;
+  alertContainer.style.right = 0;
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
 };
 
-const getRandomFloatNumberInRange = (min, max, decimalPlaces) => {
-  if (typeof min === 'number' && typeof max === 'number' && min >= 0 && max >= min) {
-    const number = Math.random() * (max - min + 1) + min;
-    return Number(number.toFixed(decimalPlaces));
-  }
-  throw new Error('Числа должны быть равны или больше 0');
+const addMessageSuccess = () => {
+  const successTemplate = document.querySelector('#success').content.querySelector('.success');
+  const popupSuccess = successTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupSuccess);
 };
 
-const getRandomArrayElement = (array) => array[getRandomIntegerInRange(0, array.length - 1)];
+const addMessageError = () => {
+  const successTemplate = document.querySelector('#error').content.querySelector('.error');
+  const popupSuccess = successTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupSuccess);
+};
 
-//Функция, которая возвращает случайный массив на основе другого массива
-const getRandomArray = (array) => array.slice(getRandomIntegerInRange(0, array.length -1));
+const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-export {getRandomIntegerInRange, getRandomFloatNumberInRange, getRandomArrayElement, getRandomArray};
+const closeMessageSuccess = () => {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      document.querySelector('.success').classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    document.querySelector('.success').classList.add('hidden');
+  });
+};
+
+const closeMessageError = () => {
+  document.addEventListener('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      document.querySelector('.error').classList.add('hidden');
+    }
+  });
+
+  document.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    document.querySelector('.error').classList.add('hidden');
+  });
+};
+
+const deleteEventListenerSuccess = () => {
+  document.removeEventListener('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      document.querySelector('.success').classList.add('hidden');
+    }
+  });
+
+  document.removeEventListener('click', (evt) => {
+    evt.preventDefault();
+    document.querySelector('.success').classList.add('hidden');
+  });
+};
+
+const deleteEventListenerError = () => {
+  document.removeEventListener('keydown', (evt) => {
+    if (isEscEvent(evt)) {
+      evt.preventDefault();
+      document.querySelector('.error').classList.add('hidden');
+    }
+  });
+};
+
+const buttonReset = () => {
+  document.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
+    evt.preventDefault();
+    evt.target.reset();
+  });
+};
+
+export {
+  showAlert,
+  addMessageSuccess,
+  addMessageError,
+  closeMessageSuccess,
+  deleteEventListenerSuccess,
+  closeMessageError,
+  deleteEventListenerError,
+  buttonReset
+};

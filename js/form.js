@@ -1,3 +1,17 @@
+import {
+  showAlert,
+  addMessageSuccess,
+  addMessageError,
+  closeMessageSuccess,
+  deleteEventListenerSuccess,
+  closeMessageError,
+  deleteEventListenerError
+} from './util.js';
+
+import {
+  returnMarker
+} from './map.js';
+
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 const MAX_PRICE = 1000000;
@@ -108,6 +122,39 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
+const setUserFormSubmit = () => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const formData = new FormData(adForm);
+
+    fetch(
+      'https://23.javascript.pages.academy/keksobooking',
+      {
+        method: 'POST',
+        body: formData,
+      },
+    )
+      .then((response) => {
+        if (response.ok) {
+          returnMarker();
+          addMessageSuccess();
+          closeMessageSuccess();
+          deleteEventListenerSuccess();
+          evt.target.reset();
+        } else {
+          addMessageError();
+          adForm.setAttribute('autocomplete', 'on');
+          closeMessageError();
+          deleteEventListenerError();
+        }
+      })
+      .catch(() => {
+        showAlert('Не удалось отправить форму. Попробуйте еще раз');
+      });
+  });
+};
+
 export {
-  activateForm
+  activateForm, setUserFormSubmit
 };

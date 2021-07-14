@@ -1,12 +1,23 @@
-import {
-  renderPopup
-} from './popup.js';
+const createFetch = (onSuccess, onError) =>
+  fetch(
+    'https://23.javascript.pages.academy/keksobooking/data',
+    {
+      method: 'GET',
+      credentials: 'same-origin',
+    },
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      }
 
-fetch('https://23.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((json) => {
-    console.log('Результат', json[0]);
-  })
-  .then((json) => {
-    renderPopup(json[0]);
-  });
+      throw new Error(`${response.status} ${response.statusText}`);
+    })
+    .then((json) => {
+      onSuccess(json);
+    })
+    .catch((error) => {
+      onError(error);
+    });
+
+export {createFetch};
