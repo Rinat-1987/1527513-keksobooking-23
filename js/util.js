@@ -27,12 +27,14 @@ const addMessageSuccess = () => {
   const successTemplate = document.querySelector('#success').content.querySelector('.success');
   const popupSuccess = successTemplate.cloneNode(true);
   document.body.insertAdjacentElement('beforeend', popupSuccess);
+  popupSuccess.classList.remove('hidden');
 };
 
 const addMessageError = () => {
   const successTemplate = document.querySelector('#error').content.querySelector('.error');
-  const popupSuccess = successTemplate.cloneNode(true);
-  document.body.insertAdjacentElement('beforeend', popupSuccess);
+  const popupError = successTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupError);
+  popupError.classList.remove('hidden');
 };
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
