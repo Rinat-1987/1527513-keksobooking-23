@@ -1,16 +1,10 @@
 import {
-  showAlert,
-  addMessageSuccess,
-  addMessageError,
-  closeMessageSuccess,
-  deleteEventListenerSuccess,
-  closeMessageError,
-  deleteEventListenerError
+  onFailFunctions
 } from './util.js';
 
 import {
-  returnMarker
-} from './map.js';
+  sendData
+} from './api.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -122,39 +116,20 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
-const setUserFormSubmit = () => {
+const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
-    const formData = new FormData(adForm);
-
-    fetch(
-      'https://23.javascript.pages.academy/keksobooking',
-      {
-        method: 'POST',
-        body: formData,
-      },
-    )
-      .then((response) => {
-        if (response.ok) {
-          returnMarker();
-          addMessageSuccess();
-          closeMessageSuccess();
-          deleteEventListenerSuccess();
-          evt.target.reset();
-        } else {
-          addMessageError();
-          adForm.setAttribute('autocomplete', 'on');
-          closeMessageError();
-          deleteEventListenerError();
-        }
-      })
-      .catch(() => {
-        showAlert('Не удалось отправить форму. Попробуйте еще раз');
-      });
+    sendData(
+      () => {onSuccess(), evt.target.reset();},
+      () => onFailFunctions(),
+      new FormData(evt.target),
+    );
   });
 };
 
 export {
-  activateForm, setUserFormSubmit
+  activateForm,
+  setUserFormSubmit,
+  adForm
 };

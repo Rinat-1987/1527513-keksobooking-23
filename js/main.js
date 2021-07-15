@@ -4,17 +4,18 @@ import {
 } from './form.js';
 
 import {
-  createFetch
-} from './create-fetch.js';
+  getData
+} from './api.js';
 
 import {
   renderData
 } from './map.js';
 
 import {
-  showAlert
+  showAlert,
+  onSuccessFunctions
 } from './util.js';
 
 activateForm();
-createFetch(renderData, showAlert);
-setUserFormSubmit();
+getData(renderData, showAlert);
+setUserFormSubmit(onSuccessFunctions);

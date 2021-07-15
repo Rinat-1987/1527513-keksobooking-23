@@ -2,6 +2,10 @@ import {
   ALERT_SHOW_TIME
 } from './data.js';
 
+import {
+  adForm
+} from './form.js';
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -27,67 +31,34 @@ const addMessageSuccess = () => {
   const successTemplate = document.querySelector('#success').content.querySelector('.success');
   const popupSuccess = successTemplate.cloneNode(true);
   document.body.insertAdjacentElement('beforeend', popupSuccess);
-  popupSuccess.classList.remove('hidden');
 };
 
 const addMessageError = () => {
   const successTemplate = document.querySelector('#error').content.querySelector('.error');
   const popupError = successTemplate.cloneNode(true);
   document.body.insertAdjacentElement('beforeend', popupError);
-  popupError.classList.remove('hidden');
 };
 
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const closeMessageSuccess = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      document.querySelector('.success').classList.add('hidden');
-    }
-  });
-
-  document.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    document.querySelector('.success').classList.add('hidden');
-  });
+const onPopupEscKeydown = (evt) => {
+  if (isEscEvent(evt)) {
+    document.body.lastElementChild.classList.add('hidden');
+  }
 };
 
-const closeMessageError = () => {
-  document.addEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      document.querySelector('.error').classList.add('hidden');
-    }
-  });
-
-  document.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    document.querySelector('.error').classList.add('hidden');
-  });
+const onPopupClick = () => {
+  document.body.lastElementChild.classList.add('hidden');
 };
 
-const deleteEventListenerSuccess = () => {
-  document.removeEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      document.querySelector('.success').classList.add('hidden');
-    }
-  });
-
-  document.removeEventListener('click', (evt) => {
-    evt.preventDefault();
-    document.querySelector('.success').classList.add('hidden');
-  });
+const closeMessage = () => {
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onPopupClick);
 };
 
-const deleteEventListenerError = () => {
-  document.removeEventListener('keydown', (evt) => {
-    if (isEscEvent(evt)) {
-      evt.preventDefault();
-      document.querySelector('.error').classList.add('hidden');
-    }
-  });
+const deleteEventListenerSubmit = () => {
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.removeEventListener('click', onPopupClick);
 };
 
 const buttonReset = () => {
@@ -97,13 +68,22 @@ const buttonReset = () => {
   });
 };
 
+const onSuccessFunctions = () => {
+  addMessageSuccess();
+  closeMessage();
+  deleteEventListenerSubmit();
+};
+
+const onFailFunctions = () => {
+  addMessageError();
+  adForm.setAttribute('autocomplete', 'on');
+  closeMessage();
+  deleteEventListenerSubmit();
+};
+
 export {
   showAlert,
-  addMessageSuccess,
-  addMessageError,
-  closeMessageSuccess,
-  deleteEventListenerSuccess,
-  closeMessageError,
-  deleteEventListenerError,
-  buttonReset
+  onFailFunctions,
+  buttonReset,
+  onSuccessFunctions
 };
