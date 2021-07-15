@@ -27,63 +27,56 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-const addMessageSuccess = () => {
-  const successTemplate = document.querySelector('#success').content.querySelector('.success');
-  const popupSuccess = successTemplate.cloneNode(true);
-  document.body.insertAdjacentElement('beforeend', popupSuccess);
-};
-
-const addMessageError = () => {
-  const successTemplate = document.querySelector('#error').content.querySelector('.error');
-  const popupError = successTemplate.cloneNode(true);
-  document.body.insertAdjacentElement('beforeend', popupError);
-};
-
 const isEscEvent = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
-const onPopupEscKeydown = (evt) => {
+const onPopupEscKeydown = function (evt) {
   if (isEscEvent(evt)) {
-    document.body.lastElementChild.classList.add('hidden');
+    evt.preventDefault();
+    return closeModal();
   }
 };
 
-const onPopupClick = () => {
-  document.body.lastElementChild.classList.add('hidden');
-};
+function onPopupClick () {
+  return closeModal();
+}
 
-const closeMessage = () => {
+const openModalSuccess = () => {
+  const successTemplate = document.querySelector('#success').content.querySelector('.success');
+  const popupSuccess = successTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupSuccess);
   document.addEventListener('keydown', onPopupEscKeydown);
   document.addEventListener('click', onPopupClick);
 };
 
-const deleteEventListenerSubmit = () => {
+const closeModal = () => {
+  document.body.lastElementChild.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupClick);
 };
 
+const openModalError = () => {
+  const successTemplate = document.querySelector('#error').content.querySelector('.error');
+  const popupError = successTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupError);
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onPopupClick);
+};
+
 const buttonReset = () => {
   document.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
-    evt.preventDefault();
-    evt.target.reset();
+    evt.target.reset;
   });
 };
 
-const onSuccessFunctions = () => {
-  addMessageSuccess();
-  closeMessage();
-  deleteEventListenerSubmit();
-};
-
 const onFailFunctions = () => {
-  addMessageError();
+  openModalError();
   adForm.setAttribute('autocomplete', 'on');
-  closeMessage();
-  deleteEventListenerSubmit();
 };
 
 export {
   showAlert,
   onFailFunctions,
   buttonReset,
-  onSuccessFunctions
+  openModalSuccess,
+  closeModal
 };

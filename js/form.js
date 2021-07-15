@@ -121,7 +121,7 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
 
     sendData(
-      () => {onSuccess(), evt.target.reset();},
+      () => {onSuccess(),evt.target.reset();},
       () => onFailFunctions(),
       new FormData(evt.target),
     );

@@ -13,9 +13,9 @@ import {
 
 import {
   showAlert,
-  onSuccessFunctions
+  openModalSuccess
 } from './util.js';
 
 activateForm();
 getData(renderData, showAlert);
-setUserFormSubmit(onSuccessFunctions);
+setUserFormSubmit(openModalSuccess);
