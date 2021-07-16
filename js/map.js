@@ -1,6 +1,4 @@
-//Здесь будет карта
 import {
-  createAdvertisements,
   COORDINATES_DECIMAL_PLACES
 } from './data.js';
 
@@ -8,7 +6,11 @@ import {
   createCustomPopup
 } from './card.js';
 
-const QUANTITY_CARDS = 10;
+import {
+  buttonReset
+} from './util.js';
+
+const formReset = document.querySelector('.ad-form__reset');
 
 const map = L.map('map-canvas')
   .on('load', () => {})
@@ -47,30 +49,45 @@ marker.on('moveend', (evt) => {
   address.value = `${newMarkerLat.toFixed(COORDINATES_DECIMAL_PLACES)}, ${newMarkerLng.toFixed(COORDINATES_DECIMAL_PLACES)}`;
 });
 
-const newAdvertisement = createAdvertisements(QUANTITY_CARDS);
-
-newAdvertisement.forEach((point) => {
-  const lat = point.location.lat;
-  const lng = point.location.lng;
-  const icon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+const renderData = (array) => {
+  array.forEach((point) => {
+    const lat = point.location.lat;
+    const lng = point.location.lng;
+    const icon = L.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
+    const newMarker = L.marker({
+      lat,
+      lng,
+    }, {
+      icon,
+    });
+    newMarker
+      .addTo(map)
+      .bindPopup(
+        createCustomPopup(point),
+      );
   });
-  const newMarker = L.marker({
-    lat,
-    lng,
-  }, {
-    icon,
-  });
+};
 
-  newMarker
-    .addTo(map)
-    .bindPopup(
-      createCustomPopup(point),
-    );
+const returnMarker = () => {
+  marker.setLatLng({
+    lat: 35.68950,
+    lng: 139.69200,
+  });
+};
+
+formReset.addEventListener('click', (evt) => {
+  buttonReset(evt);
+  marker.setLatLng({
+    lat: 35.68950,
+    lng: 139.69200,
+  });
 });
 
 export {
-  map
+  renderData,
+  returnMarker
 };

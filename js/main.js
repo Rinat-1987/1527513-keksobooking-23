@@ -1,10 +1,21 @@
 import {
-  activateForm
+  activateForm,
+  setUserFormSubmit
 } from './form.js';
 
 import {
-  map
+  getData
+} from './api.js';
+
+import {
+  renderData
 } from './map.js';
 
+import {
+  showAlert,
+  openModalSuccess
+} from './util.js';
+
 activateForm();
-map;
+getData(renderData, showAlert);
+setUserFormSubmit(openModalSuccess);

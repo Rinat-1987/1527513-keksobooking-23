@@ -1,4 +1,10 @@
-import {APARTAMENTS} from './data.js';
+import {
+  onFailFunctions
+} from './util.js';
+
+import {
+  sendData
+} from './api.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -110,6 +116,20 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
+const setUserFormSubmit = (onSuccess) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => {onSuccess(),evt.target.reset();},
+      () => onFailFunctions(),
+      new FormData(evt.target),
+    );
+  });
+};
+
 export {
-  activateForm
+  activateForm,
+  setUserFormSubmit,
+  adForm
 };
