@@ -7,10 +7,8 @@ import {
 } from './card.js';
 
 import {
-  buttonReset
-} from './util.js';
-
-const formReset = document.querySelector('.ad-form__reset');
+  address
+} from './form.js';
 
 const map = L.map('map-canvas')
   .on('load', () => {})
@@ -40,14 +38,17 @@ const marker = L.marker({
 });
 marker.addTo(map);
 
-const address = document.querySelector('#address');
-
 marker.on('moveend', (evt) => {
   const newMarker = evt.target.getLatLng();
   const newMarkerLat = newMarker.lat;
   const newMarkerLng = newMarker.lng;
   address.value = `${newMarkerLat.toFixed(COORDINATES_DECIMAL_PLACES)}, ${newMarkerLng.toFixed(COORDINATES_DECIMAL_PLACES)}`;
 });
+
+const markerGroup = L.layerGroup().addTo(map);
+const clearLayers = () => {
+  markerGroup.clearLayers();
+};
 
 const renderData = (array) => {
   array.forEach((point) => {
@@ -65,12 +66,13 @@ const renderData = (array) => {
       icon,
     });
     newMarker
-      .addTo(map)
+      .addTo(markerGroup)
       .bindPopup(
         createCustomPopup(point),
       );
   });
 };
+
 
 const returnMarker = () => {
   marker.setLatLng({
@@ -79,15 +81,8 @@ const returnMarker = () => {
   });
 };
 
-formReset.addEventListener('click', (evt) => {
-  buttonReset(evt);
-  marker.setLatLng({
-    lat: 35.68950,
-    lng: 139.69200,
-  });
-});
-
 export {
   renderData,
-  returnMarker
+  returnMarker,
+  clearLayers
 };
