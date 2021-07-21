@@ -83,6 +83,5 @@ const returnMarker = () => {
 export {
   renderData,
   returnMarker,
-  clearLayers,
-  SIMILAR_MARKER_COUNT
+  clearLayers
 };

@@ -20,7 +20,6 @@ const filterData = (array) => {
         if (selectGuests.value === 'any' || object.offer.guests.toString() === selectGuests.value) {
           if (selectPrice.value === 'any') {
             const findChecked = document.querySelectorAll('input:checked');
-            console.log(object.offer.features);
             if (object.offer.features) {
               if (findChecked.length > 0) {
                 if (findChecked.forEach((element) => {object.offer.features.includes(element.value);})) {
@@ -28,10 +27,13 @@ const filterData = (array) => {
                 else {newArray.push(object);}
               } else {newArray.push(object);}
             } else {newArray.push(object);}
-          }
-        }
-      }
-    }});
+          } else if (object.offer.price < FIRST_PRICE_CATEGORY && selectPrice.value === 'low') {
+            newArray.push(object);
+          } else if (object.offer.price >= FIRST_PRICE_CATEGORY && object.offer.price < SECOND_PRICE_CATEGORY && selectPrice.value === 'middle') {
+            newArray.push(object);
+          } else if (object.offer.price >= SECOND_PRICE_CATEGORY && selectPrice.value === 'high') {
+            newArray.push(object);
+          }}}}});
   renderData(newArray);
 };
 
