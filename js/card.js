@@ -97,4 +97,6 @@ const createCustomPopup = (point) => {
   return popupElement;
 };
 
-export {createCustomPopup};
+export {
+  createCustomPopup
+};

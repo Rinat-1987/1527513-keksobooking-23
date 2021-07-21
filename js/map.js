@@ -1,16 +1,13 @@
 import {
-  COORDINATES_DECIMAL_PLACES
-} from './data.js';
-
-import {
   createCustomPopup
 } from './card.js';
 
 import {
-  buttonReset
-} from './util.js';
+  address
+} from './form.js';
 
-const formReset = document.querySelector('.ad-form__reset');
+const COORDINATES_DECIMAL_PLACES = 5;
+const SIMILAR_MARKER_COUNT = 10;
 
 const map = L.map('map-canvas')
   .on('load', () => {})
@@ -40,8 +37,6 @@ const marker = L.marker({
 });
 marker.addTo(map);
 
-const address = document.querySelector('#address');
-
 marker.on('moveend', (evt) => {
   const newMarker = evt.target.getLatLng();
   const newMarkerLat = newMarker.lat;
@@ -49,27 +44,33 @@ marker.on('moveend', (evt) => {
   address.value = `${newMarkerLat.toFixed(COORDINATES_DECIMAL_PLACES)}, ${newMarkerLng.toFixed(COORDINATES_DECIMAL_PLACES)}`;
 });
 
+const markerGroup = L.layerGroup().addTo(map);
+const clearLayers = () => {
+  markerGroup.clearLayers();
+};
+
 const renderData = (array) => {
-  array.forEach((point) => {
-    const lat = point.location.lat;
-    const lng = point.location.lng;
-    const icon = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
+  array.slice(0, SIMILAR_MARKER_COUNT)
+    .forEach((point) => {
+      const lat = point.location.lat;
+      const lng = point.location.lng;
+      const icon = L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+      const newMarker = L.marker({
+        lat,
+        lng,
+      }, {
+        icon,
+      });
+      newMarker
+        .addTo(markerGroup)
+        .bindPopup(
+          createCustomPopup(point),
+        );
     });
-    const newMarker = L.marker({
-      lat,
-      lng,
-    }, {
-      icon,
-    });
-    newMarker
-      .addTo(map)
-      .bindPopup(
-        createCustomPopup(point),
-      );
-  });
 };
 
 const returnMarker = () => {
@@ -79,15 +80,8 @@ const returnMarker = () => {
   });
 };
 
-formReset.addEventListener('click', (evt) => {
-  buttonReset(evt);
-  marker.setLatLng({
-    lat: 35.68950,
-    lng: 139.69200,
-  });
-});
-
 export {
   renderData,
-  returnMarker
+  returnMarker,
+  clearLayers
 };

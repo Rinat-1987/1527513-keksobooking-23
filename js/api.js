@@ -2,8 +2,15 @@ import {
   returnMarker
 } from './map.js';
 
-const getData = (onSuccess, onError) => {
-  fetch('https://23.javascript.pages.academy/keksobooking/data')
+import {
+  showAlert
+} from './util.js';
+
+const LOADING_SERVER = 'https://23.javascript.pages.academy/keksobooking/data';
+const SENDING_SERVER = 'https://23.javascript.pages.academy/keksobooking';
+
+const getData = (onSuccess) => {
+  fetch(LOADING_SERVER)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -11,17 +18,16 @@ const getData = (onSuccess, onError) => {
 
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    .then((json) => {
-      onSuccess(json);
+    .then((array) => {
+      onSuccess(array);
     })
     .catch((error) => {
-      onError(error);
+      showAlert(error);
     });
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(
-    'https://23.javascript.pages.academy/keksobooking',
+  fetch(SENDING_SERVER,
     {
       method: 'POST',
       body,

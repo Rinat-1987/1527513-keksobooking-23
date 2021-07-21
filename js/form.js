@@ -1,10 +1,14 @@
 import {
-  onFailFunctions
+  isEscEvent
 } from './util.js';
 
 import {
   sendData
 } from './api.js';
+
+import {
+  returnMarker
+} from './map.js';
 
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
@@ -25,6 +29,8 @@ const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const mapForm = document.querySelector('.map__filters');
 const mapFormSelects = mapForm.querySelectorAll('select');
 const mapFormFieldset = mapForm.querySelector('.map__features');
+const formReset = adForm.querySelector('.ad-form__reset');
+const address = adForm.querySelector('#address');
 
 adForm.classList.add('ad-form--disabled');
 mapForm.classList.add('map__filters--disabled');
@@ -73,6 +79,8 @@ priceInput.setAttribute('max', MAX_PRICE);
 const quantityRoom = adForm.querySelector('#room_number');
 const capacity = adForm.querySelector('#capacity');
 
+const successTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const validateGuestsAndRooms = () => {
   if (quantityRoom.value === QUANTITY_ROOM_MAX) {
@@ -81,6 +89,8 @@ const validateGuestsAndRooms = () => {
     } else {
       quantityRoom.setCustomValidity('Укажите "Не для гостей"');
     }
+  } else if (capacity.value === CAPACITY_MIN) {
+    quantityRoom.setCustomValidity('Укажите 100 комнат');
   } else if (quantityRoom.value >= capacity.value && capacity.value !== CAPACITY_MIN) {
     quantityRoom.setCustomValidity('');
   } else {
@@ -116,20 +126,66 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
+function onPopupEscKeydown (evt) {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    // eslint-disable-next-line no-use-before-define
+    return closeModal();
+  }
+}
+
+function onPopupClick () {
+  // eslint-disable-next-line no-use-before-define
+  return closeModal();
+}
+
+const openModalSuccess = () => {
+  const popupSuccess = successTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupSuccess);
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onPopupClick);
+};
+
+const closeModal = () => {
+  document.body.lastElementChild.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.removeEventListener('click', onPopupClick);
+};
+
+const openModalError = () => {
+  const popupError = errorTemplate.cloneNode(true);
+  document.body.insertAdjacentElement('beforeend', popupError);
+  document.addEventListener('keydown', onPopupEscKeydown);
+  document.addEventListener('click', onPopupClick);
+};
+
+const openModal = () => {
+  openModalError();
+  adForm.setAttribute('autocomplete', 'on');
+};
+
+formReset.addEventListener('click', () => {
+  returnMarker();
+  mapForm.reset();
+});
+
 const setUserFormSubmit = (onSuccess) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(
       () => {onSuccess(),evt.target.reset();},
-      () => onFailFunctions(),
+      () => openModal(),
       new FormData(evt.target),
     );
   });
 };
 
 export {
+  openModalSuccess,
   activateForm,
   setUserFormSubmit,
-  adForm
+  adForm,
+  address,
+  formReset
 };
