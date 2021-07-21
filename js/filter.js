@@ -24,12 +24,14 @@ const filterData = (array) => {
             if (object.offer.features) {
               if (findChecked.length > 0) {
                 if (findChecked.forEach((element) => {object.offer.features.includes(element.value);})) {
-                  newArray.push(obj);}
-              }
-            }
+                  newArray.push(object);}
+                else {newArray.push(object);}
+              } else {newArray.push(object);}
+            } else {newArray.push(object);}
           }
         }
-      }}});
+      }
+    }});
   renderData(newArray);
 };
 
