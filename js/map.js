@@ -1,14 +1,13 @@
 import {
-  COORDINATES_DECIMAL_PLACES
-} from './data.js';
-
-import {
   createCustomPopup
 } from './card.js';
 
 import {
   address
 } from './form.js';
+
+const COORDINATES_DECIMAL_PLACES = 5;
+const SIMILAR_MARKER_COUNT = 10;
 
 const map = L.map('map-canvas')
   .on('load', () => {})
@@ -51,28 +50,28 @@ const clearLayers = () => {
 };
 
 const renderData = (array) => {
-  array.forEach((point) => {
-    const lat = point.location.lat;
-    const lng = point.location.lng;
-    const icon = L.icon({
-      iconUrl: 'img/pin.svg',
-      iconSize: [40, 40],
-      iconAnchor: [20, 40],
+  array.slice(0, SIMILAR_MARKER_COUNT)
+    .forEach((point) => {
+      const lat = point.location.lat;
+      const lng = point.location.lng;
+      const icon = L.icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+      const newMarker = L.marker({
+        lat,
+        lng,
+      }, {
+        icon,
+      });
+      newMarker
+        .addTo(markerGroup)
+        .bindPopup(
+          createCustomPopup(point),
+        );
     });
-    const newMarker = L.marker({
-      lat,
-      lng,
-    }, {
-      icon,
-    });
-    newMarker
-      .addTo(markerGroup)
-      .bindPopup(
-        createCustomPopup(point),
-      );
-  });
 };
-
 
 const returnMarker = () => {
   marker.setLatLng({
@@ -84,5 +83,6 @@ const returnMarker = () => {
 export {
   renderData,
   returnMarker,
-  clearLayers
+  clearLayers,
+  SIMILAR_MARKER_COUNT
 };

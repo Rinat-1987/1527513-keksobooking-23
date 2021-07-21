@@ -2,16 +2,15 @@ import {
   returnMarker
 } from './map.js';
 
-/*import {
-  getValueType
-} from './filter.js';*/
+import {
+  showAlert
+} from './util.js';
 
-const GET_SERVER = 'https://23.javascript.pages.academy/keksobooking/data';
-const SEND_SERVER = 'https://23.javascript.pages.academy/keksobooking';
-const SIMILAR_MARKER_COUNT = 10;
+const LOADING_SERVER = 'https://23.javascript.pages.academy/keksobooking/data';
+const SENDING_SERVER = 'https://23.javascript.pages.academy/keksobooking';
 
-const getData = (onSuccess, onError) => {
-  fetch(GET_SERVER)
+const getData = (onSuccess) => {
+  fetch(LOADING_SERVER)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -19,16 +18,16 @@ const getData = (onSuccess, onError) => {
 
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    .then((arr) => {
-      onSuccess(arr.slice(0, SIMILAR_MARKER_COUNT));
+    .then((array) => {
+      onSuccess(array);
     })
     .catch((error) => {
-      onError(error);
+      showAlert(error);
     });
 };
 
 const sendData = (onSuccess, onFail, body) => {
-  fetch(SEND_SERVER,
+  fetch(SENDING_SERVER,
     {
       method: 'POST',
       body,

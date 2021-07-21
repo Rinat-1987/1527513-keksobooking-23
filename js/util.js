@@ -1,6 +1,4 @@
-import {
-  ALERT_SHOW_TIME
-} from './data.js';
+const ALERT_SHOW_TIME = 5000;
 
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');

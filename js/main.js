@@ -9,34 +9,24 @@ import {
 } from './api.js';
 
 import {
-  showAlert
-} from './util.js';
-
-import {
-  getValueType,
-  getValuePrice
+  cbFormChange,
+  filterData
 } from './filter.js';
 
 import {
   renderData
 } from './map.js';
 
+const RERENDER_DELAY = 500;
+
 activateForm();
 
 getData((array) => {
-  renderData(array), showAlert;
-  getValueType(array);
-  getValuePrice(array);
+  renderData(array);
+  cbFormChange(_.debounce(
+    () => filterData(array),
+    RERENDER_DELAY,
+  ));
 });
 
 setUserFormSubmit(openModalSuccess);
-
-
-/*getData((array) => {
-  getValueType(
-    array,
-    () => renderData(array));
-});*/
-//getData(renderData);
-//getData((array) => {
-//  renderData(array);

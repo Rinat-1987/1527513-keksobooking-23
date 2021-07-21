@@ -29,9 +29,8 @@ const adFormFieldsets = adForm.querySelectorAll('fieldset');
 const mapForm = document.querySelector('.map__filters');
 const mapFormSelects = mapForm.querySelectorAll('select');
 const mapFormFieldset = mapForm.querySelector('.map__features');
-const formReset = document.querySelector('.ad-form__reset');
-const address = document.querySelector('#address');
-
+const formReset = adForm.querySelector('.ad-form__reset');
+const address = adForm.querySelector('#address');
 
 adForm.classList.add('ad-form--disabled');
 mapForm.classList.add('map__filters--disabled');
@@ -90,6 +89,8 @@ const validateGuestsAndRooms = () => {
     } else {
       quantityRoom.setCustomValidity('Укажите "Не для гостей"');
     }
+  } else if (capacity.value === CAPACITY_MIN) {
+    quantityRoom.setCustomValidity('Укажите 100 комнат');
   } else if (quantityRoom.value >= capacity.value && capacity.value !== CAPACITY_MIN) {
     quantityRoom.setCustomValidity('');
   } else {
@@ -165,6 +166,7 @@ const openModal = () => {
 
 formReset.addEventListener('click', () => {
   returnMarker();
+  mapForm.reset();
 });
 
 const setUserFormSubmit = (onSuccess) => {
@@ -184,5 +186,6 @@ export {
   activateForm,
   setUserFormSubmit,
   adForm,
-  address
+  address,
+  formReset
 };
