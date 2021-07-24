@@ -8,13 +8,18 @@ import {
 
 const COORDINATES_DECIMAL_PLACES = 5;
 const SIMILAR_MARKER_COUNT = 10;
+const COORDINATE_LAT_DEFAULT = 35.68950;
+const COORDINATE_LNG_DEFAULT = 139.69200;
+const MAP_SCALE = 10;
+const SPECIAL_MARKER_SIZE = 52;
+const SIMILAR_MARKER_SIZE = 40;
 
 const map = L.map('map-canvas')
   .on('load', () => {})
   .setView({
-    lat: 35.68950,
-    lng: 139.69200,
-  }, 10);
+    lat: COORDINATE_LAT_DEFAULT,
+    lng: COORDINATE_LNG_DEFAULT,
+  }, MAP_SCALE);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -24,13 +29,13 @@ L.tileLayer(
 
 const mainPinIcon = L.icon({
   iconUrl: 'img/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconSize: [SPECIAL_MARKER_SIZE, SPECIAL_MARKER_SIZE],
+  iconAnchor: [SPECIAL_MARKER_SIZE/2, SPECIAL_MARKER_SIZE],
 });
 
 const marker = L.marker({
-  lat: 35.6895,
-  lng: 139.692,
+  lat: COORDINATE_LAT_DEFAULT,
+  lng: COORDINATE_LNG_DEFAULT,
 }, {
   draggable: true,
   icon: mainPinIcon,
@@ -56,8 +61,8 @@ const renderData = (array) => {
       const lng = point.location.lng;
       const icon = L.icon({
         iconUrl: 'img/pin.svg',
-        iconSize: [40, 40],
-        iconAnchor: [20, 40],
+        iconSize: [SIMILAR_MARKER_SIZE, SIMILAR_MARKER_SIZE],
+        iconAnchor: [SIMILAR_MARKER_SIZE/2, SIMILAR_MARKER_SIZE],
       });
       const newMarker = L.marker({
         lat,
@@ -75,8 +80,8 @@ const renderData = (array) => {
 
 const returnMarker = () => {
   marker.setLatLng({
-    lat: 35.68950,
-    lng: 139.69200,
+    lat: COORDINATE_LAT_DEFAULT,
+    lng: COORDINATE_LNG_DEFAULT,
   });
 };
 

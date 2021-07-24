@@ -17,6 +17,8 @@ import {
   renderData
 } from './map.js';
 
+import './avatar.js';
+
 const RERENDER_DELAY = 500;
 
 activateForm();

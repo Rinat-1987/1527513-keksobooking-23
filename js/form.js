@@ -3,10 +3,12 @@ import {
 } from './util.js';
 
 import {
+  getData,
   sendData
 } from './api.js';
 
 import {
+  renderData,
   returnMarker
 } from './map.js';
 
@@ -126,18 +128,18 @@ timeOut.addEventListener('change', () => {
   timeIn.value = timeOut.value;
 });
 
-function onPopupEscKeydown (evt) {
+const onPopupEscKeydown = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
     // eslint-disable-next-line no-use-before-define
     return closeModal();
   }
-}
+};
 
-function onPopupClick () {
+const onPopupClick = () => {
   // eslint-disable-next-line no-use-before-define
-  return closeModal();
-}
+  closeModal();
+};
 
 const openModalSuccess = () => {
   const popupSuccess = successTemplate.cloneNode(true);
@@ -167,6 +169,9 @@ const openModal = () => {
 formReset.addEventListener('click', () => {
   returnMarker();
   mapForm.reset();
+  getData((array) => {
+    renderData(array);
+  });
 });
 
 const setUserFormSubmit = (onSuccess) => {

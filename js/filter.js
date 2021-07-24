@@ -5,6 +5,10 @@ import {
 
 const FIRST_PRICE_CATEGORY = 10000;
 const SECOND_PRICE_CATEGORY = 50000;
+const VALUE_ANY = 'any';
+const LOW_PRICE_VALUE = 'low';
+const MIDDLE_PRICE_VALUE = 'middle';
+const HIGH_PRICE_VALUE = 'high';
 
 const filterForm = document.querySelector('.map__filters');
 const selectType = filterForm.querySelector('#housing-type');
@@ -15,10 +19,10 @@ const selectGuests = filterForm.querySelector('#housing-guests');
 const filterData = (array) => {
   const newArray = [];
   array.forEach((object) => {
-    if (selectType.value === 'any' || object.offer.type === selectType.value) {
-      if (selectRooms.value === 'any' || object.offer.rooms.toString() === selectRooms.value) {
-        if (selectGuests.value === 'any' || object.offer.guests.toString() === selectGuests.value) {
-          if (selectPrice.value === 'any') {
+    if (selectType.value === VALUE_ANY || object.offer.type === selectType.value) {
+      if (selectRooms.value === VALUE_ANY || object.offer.rooms.toString() === selectRooms.value) {
+        if (selectGuests.value === VALUE_ANY || object.offer.guests.toString() === selectGuests.value) {
+          if (selectPrice.value === VALUE_ANY) {
             const findChecked = document.querySelectorAll('input:checked');
             if (object.offer.features) {
               if (findChecked.length > 0) {
@@ -27,11 +31,11 @@ const filterData = (array) => {
                 else {newArray.push(object);}
               } else {newArray.push(object);}
             } else {newArray.push(object);}
-          } else if (object.offer.price < FIRST_PRICE_CATEGORY && selectPrice.value === 'low') {
+          } else if (object.offer.price < FIRST_PRICE_CATEGORY && selectPrice.value === LOW_PRICE_VALUE) {
             newArray.push(object);
-          } else if (object.offer.price >= FIRST_PRICE_CATEGORY && object.offer.price < SECOND_PRICE_CATEGORY && selectPrice.value === 'middle') {
+          } else if (object.offer.price >= FIRST_PRICE_CATEGORY && object.offer.price < SECOND_PRICE_CATEGORY && selectPrice.value === MIDDLE_PRICE_VALUE) {
             newArray.push(object);
-          } else if (object.offer.price >= SECOND_PRICE_CATEGORY && selectPrice.value === 'high') {
+          } else if (object.offer.price >= SECOND_PRICE_CATEGORY && selectPrice.value === HIGH_PRICE_VALUE) {
             newArray.push(object);
           }}}}});
   renderData(newArray);
