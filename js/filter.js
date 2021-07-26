@@ -1,6 +1,5 @@
 import {
-  clearLayers,
-  renderData
+  clearLayers
 } from './map.js';
 
 const FIRST_PRICE_CATEGORY = 10000;
@@ -16,29 +15,58 @@ const selectPrice = filterForm.querySelector('#housing-price');
 const selectRooms = filterForm.querySelector('#housing-rooms');
 const selectGuests = filterForm.querySelector('#housing-guests');
 
-const filterData = (array) => {
-  const newArray = [];
-  array.forEach((object) => {
-    if (selectType.value === VALUE_ANY || object.offer.type === selectType.value) {
-      if (selectRooms.value === VALUE_ANY || object.offer.rooms.toString() === selectRooms.value) {
-        if (selectGuests.value === VALUE_ANY || object.offer.guests.toString() === selectGuests.value) {
-          if (selectPrice.value === VALUE_ANY) {
-            const findChecked = document.querySelectorAll('input:checked');
-            if (object.offer.features) {
-              if (findChecked.length > 0) {
-                if (findChecked.forEach((element) => {object.offer.features.includes(element.value);})) {
-                  newArray.push(object);}
-                else {newArray.push(object);}
-              } else {newArray.push(object);}
-            } else {newArray.push(object);}
-          } else if (object.offer.price < FIRST_PRICE_CATEGORY && selectPrice.value === LOW_PRICE_VALUE) {
-            newArray.push(object);
-          } else if (object.offer.price >= FIRST_PRICE_CATEGORY && object.offer.price < SECOND_PRICE_CATEGORY && selectPrice.value === MIDDLE_PRICE_VALUE) {
-            newArray.push(object);
-          } else if (object.offer.price >= SECOND_PRICE_CATEGORY && selectPrice.value === HIGH_PRICE_VALUE) {
-            newArray.push(object);
-          }}}}});
-  renderData(newArray);
+const filteringType = (object) => {
+  if (selectType.value === VALUE_ANY) {
+    return true;
+  } else if (object.offer.type === selectType.value) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const filteringPrice = (object) => {
+  if (selectPrice.value === VALUE_ANY) {
+    return true;
+  } else if (object.offer.price < FIRST_PRICE_CATEGORY && selectPrice.value === LOW_PRICE_VALUE) {
+    return true;
+  } else if (object.offer.price >= FIRST_PRICE_CATEGORY && object.offer.price < SECOND_PRICE_CATEGORY && selectPrice.value === MIDDLE_PRICE_VALUE) {
+    return true;
+  } else if (object.offer.price >= SECOND_PRICE_CATEGORY && selectPrice.value === HIGH_PRICE_VALUE) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const filteringRooms = (object) => {
+  if (selectRooms.value === VALUE_ANY) {
+    return true;
+  } else if (object.offer.rooms.toString() === selectRooms.value) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const filteringGuests = (object) => {
+  if (selectGuests.value === VALUE_ANY) {
+    return true;
+  } else if (object.offer.guests.toString() === selectGuests.value) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const filteringFeauters = (object) => {
+  const checkedFeatures = filterForm.querySelectorAll('.map__checkbox:checked');
+  if (checkedFeatures.length === 0) {
+    return true;
+  } else if (object.offer.features === undefined) {
+    return false;
+  }
+  return [].every.call(checkedFeatures, (element) => object.offer.features.includes(element.value));
 };
 
 const cbFormChange = (cb) => {
@@ -49,6 +77,10 @@ const cbFormChange = (cb) => {
 };
 
 export {
-  filterData,
+  filteringType,
+  filteringPrice,
+  filteringRooms,
+  filteringGuests,
+  filteringFeauters,
   cbFormChange
 };

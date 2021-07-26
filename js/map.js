@@ -6,6 +6,14 @@ import {
   address
 } from './form.js';
 
+import {
+  filteringType,
+  filteringPrice,
+  filteringRooms,
+  filteringGuests,
+  filteringFeauters
+} from './filter.js';
+
 const COORDINATES_DECIMAL_PLACES = 5;
 const SIMILAR_MARKER_COUNT = 10;
 const COORDINATE_LAT_DEFAULT = 35.68950;
@@ -55,7 +63,13 @@ const clearLayers = () => {
 };
 
 const renderData = (array) => {
-  array.slice(0, SIMILAR_MARKER_COUNT)
+  array.slice()
+    .filter((object) => filteringType(object))
+    .filter((object) => filteringPrice(object))
+    .filter((object) => filteringRooms(object))
+    .filter((object) => filteringGuests(object))
+    .filter((object) => filteringFeauters(object))
+    .slice(0, SIMILAR_MARKER_COUNT)
     .forEach((point) => {
       const lat = point.location.lat;
       const lng = point.location.lng;

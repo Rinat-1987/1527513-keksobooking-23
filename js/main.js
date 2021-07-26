@@ -9,8 +9,7 @@ import {
 } from './api.js';
 
 import {
-  cbFormChange,
-  filterData
+  cbFormChange
 } from './filter.js';
 
 import {
@@ -26,7 +25,7 @@ activateForm();
 getData((array) => {
   renderData(array);
   cbFormChange(_.debounce(
-    () => filterData(array),
+    () => renderData(array),
     RERENDER_DELAY,
   ));
 });
